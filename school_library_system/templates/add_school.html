@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Εγγραφή Νέου Χρήστη</title>
+</head>
+ <style>
+                .return-btn {
+                    position: fixed;
+                    top: 20px;
+                    left: 20px;
+                    background-color: #007bff;
+                    color: #fff;
+                    padding: 8px 16px;
+                    border: none;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    text-decoration: none;
+                }
+                body{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    flex-direction: column;
+                }
+
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    width: 300px;
+                    margin-top: 20px;
+                }
+
+                label{
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                }
+
+                input{
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+
+                input[type="submit"]{
+                    padding: 10px 20px;
+                    background-color: #1B7A3B;
+                    color: #fff;
+                    border: none;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                }
+
+                .message {
+                font-weight: bold;
+                font-size: 20px;
+                }
+
+            </style>
+<body>
+    <form action="/sysadmin" method="post">
+    <input type="submit" value="Επιστροφή στην προηγούμενη σελίδα">
+    </form>
+    <h1>Εγγραφή Νέου Χρήστη</h1>
+    <form method="POST" action="/sysadmin/add_school">
+        <label for="name">Όνομα Σχολείου:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="principal_name">Όνομα Διευθυντή:</label>
+        <input type="text" id="principal_name" name="principal_name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone_number">Τηλέφωνο:</label>
+        <input type="text" id="phone_number" name="phone_number" required>
+
+        <label for="city">Πόλη:</label>
+        <input type="text" id="city" name="city" required>
+
+        <label for="address">Διεύθυνση:</label>
+        <input type="text" id="address" name="address" required>
+
+        <input type="submit" name ="register" id="register"  value="Εγγραφή">
+    </form>
+    {% if msg %}
+        <p class="message">{{ msg }}</p>
+    {% endif %}
+</body>
+</html>

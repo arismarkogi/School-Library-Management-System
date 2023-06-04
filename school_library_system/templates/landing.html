@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Δίκτυο Σχολικών Βιβλιοθηκών</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            display: block; 
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .msg {
+            color: #f00;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form action="/" method="POST">
+        <h1>Εφαρμογή Διαχείρισης Βιβλιοθήκης - Δίκτυο Σχολικών Βιβλιοθηκών</h1>
+        <input type="submit" name="register_simple_user" value="Εγγραφή Νέου Χρήστη">
+        <input type="submit" name="register_school_admin" value="Εγγραφή Νέου Χειριστή">
+        <input type="submit" name="login" value="Είσοδος">
+    </form>
+</body>
+</html>

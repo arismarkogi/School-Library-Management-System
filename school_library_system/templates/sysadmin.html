@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Κεντρικός διαχειριστής</title>
+</head>
+<style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            display: block; 
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .msg {
+            color: #f00;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-right: 30px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+
+
+<body>
+    <table>
+     <tr>
+            <th>Username</th>
+            <td>{{ data.username }}</th>
+        </tr>
+        <tr>
+            <th>Email</td>
+            <td>{{ data.email }}</td>
+        </tr>
+        <tr>
+            <th>Όνομα</td>
+            <td>{{ data.name }}</td>
+        </tr>
+        <tr>
+            <th>Επώνυμο</td>
+            <td>{{ data.surname }}</td>
+        </tr>
+        <tr>
+            <th>Τύπος Χρήστη</th>
+            <td>Κεντρικός Διαχειριστής</td>
+        </tr>
+    </table>
+    <form method="post" action="/sysadmin">
+        {% if msg %}
+        <p class="msg">{{ msg }}</p>
+        {% endif %}
+        <input type="submit" name="create_backup" value="Δημιουργία Αντιγράφου Ασφαλέιας">
+        <input type="submit" name="restore" value="Αποκατάσταση της Βάσης">
+        <input type="submit" name="add_school" value="Καταχώρηση Νέου Σχολείου">
+        <input type="submit" name="school_admin_requests" value="Αιτήσεις Χειριστών">
+        <input type="submit" name="show_borrows" value="3.1.1 Δανεισμοί ανά Σχολείο">
+        <input type="submit" name="show_teachers_authors" value="3.1.2 Συγγραφείς και δανεισμοί εκπαιδευτικών ανά κατηγορία">
+        <input type="submit" name="show_teachers2" value="3.1.3 Εκπαιδευτικοί κάτω των 40 που έχουν δανειστεί τα περισσότερα βιβλία">
+        <input type="submit" name="show_authors1" value="3.1.4 Συγγραφείς των οποίων κανένα βιβλίο δεν έχει τύχει δανεισμού">
+        <input type="submit" name="show_school_admins" value="3.1.5 Xειριστές έχουν δανείσει τον ίδιο αριθμό βιβλίων σε διάστημα ενός έτους με περισσότερους από 20 δανεισμούς">
+        <input type="submit" name="show_categories" value="3.1.6  Tα 3 κορυφαία ζεύγη κατηγοριών που εμφανίστηκαν σε δανεισμούς">
+        <input type="submit" name="show_authors3" value="3.1.7 Συγγραφείς που έχουν γράψει τουλάχιστον 5 λιγότερα βιβλία από τον Συγγραφέα με τα περισσότερα Βιβλία">
+        <input type="submit" name="change_password" value="Αλλαγή Κωδικού">
+        <input type="submit" name="change_data" value="Αλλαγή Λοιπών Στοιχείων">
+    </form>
+</body>
+</html>

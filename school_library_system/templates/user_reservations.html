@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Οι Ενεργές μου Κρατήσεις</title>
+</head>
+<style>
+        .return-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    form {
+        display: inline;
+        margin: 0;
+        padding: 0;
+    }
+
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .active {
+        color: green;
+        font-weight: bold;
+    }
+
+    .inactive {
+        color: red;
+        font-weight: bold;
+    }
+    #message{
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
+
+<body> 
+<form action="/simple_user" method="post">
+    <input type="submit" value="Επιστροφή στην προηγούμενη σελίδα">
+    </form> 
+    <table>
+        <tr>
+            <th>ID Κράτησης</th>
+            <th>ISBN</th>
+            <th>Τίτλος</th>
+            <th>Ημερομηνία Κράτησης</th>
+            <th>Επιλογές</th>
+        </tr>
+    {% for reservation in reservations %}    
+<tr>
+    <td>{{ reservation.reservation_id}}</td>
+    <td>{{ reservation.isbn }}</td>
+    <td>{{ reservation.title }}</td>
+    <td>{{ reservation.reservation_date }}</td>
+    <td>
+        <form action="/simple_user/reservations" method="POST" style="display: inline;">
+            <input type="hidden" name="reservation_id" value="{{ reservation.reservation_id }}">
+            <input type="hidden" name="cancellation" value="cancellation">
+            <input type="submit"value="Ακύρωση Κράτησης">
+        </form>
+    </td>
+    </tr>
+ {% endfor %}
+    </table>
+    {% if msg %}
+        <p id="message">{{ msg }}</p>
+    {% endif %}
+</body>
+</html>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple User Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            display: block; 
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .msg {
+            color: #f00;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-right: 30px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Username</th>
+            <td>{{ data.username }}</th>
+        </tr>
+        <tr>
+            <th>Email</td>
+            <td>{{ data.email }}</td>
+        </tr>
+        <tr>
+            <th>Όνομα</td>
+            <td>{{ data.name }}</td>
+        </tr>
+        <tr>
+            <th>Επώνυμο</td>
+            <td>{{ data.surname }}</td>
+        </tr>
+        <tr>
+            <th>Ημερομηνία Γέννησης</td>
+            <td>{{ data.birthdate }}</td>
+        </tr>
+        <tr>
+            <th>Τύπος Χρήστη</th>
+            <td>
+                {% if data.user_type == 'student' %}
+                    Μαθητής/Μαθήτρια
+                {% else %}
+                    Καθηγητής/Καθηγήτρια
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Σχολείο</td>
+            <td>{{ data.school_name }}</td>
+        </tr>
+    </table>
+
+    <form action="/simple_user" method="POST">
+        <input type="submit" name="show_books" value="3.3.1 Τα βιβλία που υπάρχουν στην βιβλιοθήκη του σχολείου μου">
+        <input type="submit" name="show_borbooks" value="3.3.2 Τα βιβλία που έχω δανειστέι">
+        <input type="submit" name="reservations" value="Οι ενεργές κρατήσεις μου">
+        <input type="submit" name="reviews" value="Αξιολογήσεις Χρηστών">
+        <input type="submit" name="change_password" value="Αλλαγή Κωδικού">
+        {% if data.user_type == 'teacher' %}
+        <input type="submit" name="change_data" value="Αλλαγή Λοιπών Στοιχείων">
+        {% endif %}
+    </form>
+</body>
+</html>

@@ -1,0 +1,162 @@
+
+CREATE DATABASE school_library_system;
+USE school_library_system;
+
+
+CREATE TABLE school(
+	school_id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	principal_name VARCHAR(50) NOT NULL,
+	city VARCHAR(20) NOT NULL,
+	phone_number INT(10) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	address VARCHAR(50) NOT NULL,
+	UNIQUE(email),
+	UNIQUE(name)
+);
+
+CREATE TABLE users(
+	user_id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	UNIQUE(username), 
+	UNIQUE(email)
+);
+
+CREATE TABLE sysadmin(
+	user_id MEDIUMINT UNSIGNED PRIMARY KEY REFERENCES users(user_id),
+	name VARCHAR(30) NOT NULL,
+	surname VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE school_admin(
+	user_id MEDIUMINT UNSIGNED PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
+	name VARCHAR(30) NOT NULL,
+	surname VARCHAR(30) NOT NULL,
+	school_id SMALLINT UNSIGNED NOT NULL,
+	active BOOLEAN NOT NULL DEFAULT FALSE,
+	FOREIGN KEY (school_id) REFERENCES school(school_id)
+
+);
+
+ALTER TABLE school
+ADD COLUMN school_admin_id MEDIUMINT UNSIGNED NOT NULL DEFAULT 1, -- user_id: 1 is the admin of the whole database
+ADD CONSTRAINT fk_school_admin_id
+    FOREIGN KEY (school_admin_id) REFERENCES users(user_id);
+
+
+CREATE TABLE simple_user(
+	user_id MEDIUMINT UNSIGNED PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
+	user_type ENUM('teacher', 'student') NOT NULL,
+	name VARCHAR(30) NOT NULL,
+	surname VARCHAR(30) NOT NULL,
+	birthdate DATE NOT NULL,
+	active BOOLEAN NOT NULL DEFAULT FALSE,
+	age TINYINT UNSIGNED,
+	cur_borrow_num TINYINT UNSIGNED NOT NULL DEFAULT 0,
+	res_num TINYINT UNSIGNED NOT NULL DEFAULT 0,
+	school_id SMALLINT UNSIGNED NOT NULL,
+
+	FOREIGN KEY (school_id) REFERENCES school(school_id) ON UPDATE CASCADE ON DELETE CASCADE
+
+);
+
+
+CREATE TABLE book(
+	isbn BIGINT(13) UNSIGNED NOT NULL PRIMARY KEY,
+	title VARCHAR(50) NOT NULL,
+	pages SMALLINT NOT NULL,
+	language VARCHAR(30) NOT NULL,
+	keywords VARCHAR(50) NOT NULL,
+	summary VARCHAR(1000) DEFAULT "Summary is not submitted",
+	publisher VARCHAR(50) NOT NULL,
+	image_url VARCHAR(255) NOT NULL DEFAULT '/static/book_image.jpg'
+); 
+
+
+CREATE TABLE library_book(
+
+	copies SMALLINT NOT NULL,
+	isbn BIGINT(13) UNSIGNED NOT NULL,
+	school_id SMALLINT UNSIGNED NOT NULL,
+
+	PRIMARY KEY(school_id, isbn),
+	FOREIGN KEY (school_id) REFERENCES school(school_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (isbn) REFERENCES book(isbn) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE author(
+	name VARCHAR(30) NOT NULL,
+	surname VARCHAR(30) NOT NULL,
+	PRIMARY KEY(surname, name)
+);
+
+
+CREATE TABLE book_author(
+  isbn BIGINT(13) UNSIGNED NOT NULL,
+  name VARCHAR(30) NOT NULL,
+  surname VARCHAR(30) NOT NULL,
+
+  PRIMARY KEY(isbn, name, surname),
+  FOREIGN KEY (isbn) REFERENCES book(isbn) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (surname, name) REFERENCES author(surname, name) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE category(
+	category_name VARCHAR(40) PRIMARY KEY
+);
+
+CREATE TABLE book_category(
+
+  isbn BIGINT(13) UNSIGNED,
+  category_name VARCHAR(40),
+  
+  PRIMARY KEY(isbn, category_name),
+  FOREIGN KEY (isbn) REFERENCES book(isbn) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (category_name) REFERENCES category(category_name) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE borrow(
+	
+	borrow_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id MEDIUMINT UNSIGNED NOT NULL,
+	admin_id MEDIUMINT UNSIGNED NOT NULL,
+	isbn BIGINT(13) UNSIGNED NOT NULL,
+	borrow_date DATE NOT NULL,
+	returned BOOLEAN NOT NULL DEFAULT FALSE,
+	late BOOLEAN NOT NULL DEFAULT FALSE,
+	
+	FOREIGN KEY (isbn) REFERENCES library_book(isbn) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES simple_user(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (admin_id) REFERENCES school_admin(user_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE reservation(
+	
+	reservation_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id MEDIUMINT UNSIGNED NOT NULL,
+	isbn BIGINT(13) UNSIGNED NOT NULL,
+	reservation_date DATE NOT NULL,
+	cancelled BOOLEAN NOT NULL DEFAULT FALSE,
+	
+	FOREIGN KEY (isbn) REFERENCES library_book(isbn) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES simple_user(user_id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE review(
+
+	review_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	likert TINYINT(1) UNSIGNED NOT NULL CHECK (likert >= 1 AND likert <= 5),
+	review_text VARCHAR(1000) DEFAULT "There is no written review submitted",
+	isbn BIGINT(13) UNSIGNED NOT NULL,
+	user_id MEDIUMINT UNSIGNED NOT NULL,
+	approved BOOLEAN NOT NULL DEFAULT TRUE,
+
+	FOREIGN KEY (isbn) REFERENCES book(isbn) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES simple_user(user_id) ON UPDATE CASCADE ON DELETE CASCADE
+);

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Χειριστής Σχολικής Μονάδας</title>
+</head>
+<style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            display: block; 
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .msg {
+            color: #f00;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-right: 30px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+
+<body>
+    <table>
+     <tr>
+            <th>Username</th>
+            <td>{{ data.username }}</th>
+        </tr>
+        <tr>
+            <th>Email</td>
+            <td>{{ data.email }}</td>
+        </tr>
+        <tr>
+            <th>Όνομα</td>
+            <td>{{ data.name }}</td>
+        </tr>
+        <tr>
+            <th>Επώνυμο</td>
+            <td>{{ data.surname }}</td>
+        </tr>
+        <tr>
+            <th>Τύπος Χρήστη</th>
+            <td>Χειριστής Βιβλιοθήκης
+            </td>
+        </tr>
+        <tr>
+            <th>Σχολείο</td>
+            <td>{{ data.school_name }}</td>
+        </tr>
+    </table>
+    <form method="post" action="/school_admin">
+        <input type="submit" name="show_books" value="3.2.1 Βιβλία Σχολικής Βιβλιοθήκης και Δημιουργία Δανεισμών Χωρίς Κράτηση">
+        <input type="submit" name="show_borrows" value="3.2.2 Ενεργοί δανεισμοί που έχουν καθηστερήσει">
+        <input type="submit" name="show_reviews" value="3.2.3 Αξιολογήσεις ανά δανειζόμενο και κατηγορία">
+        <input type="submit" name="simple_user_status" value="Κατάσταση Λογαριασμών Χρηστών">
+        <input type="submit" name="borrow_return" value="Όλοι οι Ενεργοί Δανειμσοί">
+        <input type="submit" name="reservations" value="Κρατήσεις Χρηστών">
+        <input type="submit" name="add_library_book" value="Εισαγωγή Νέου Βιβλίου">
+        <input type="submit" name="change_book_data" value="Τροποποίηση Στοιχείων Βιβλίου">
+        <input type="submit" name="change_password" value="Αλλαγή Κωδικού">
+        <input type="submit" name="change_data" value="Αλλαγή Λοιπών Στοιχείων">
+        <input type="submit" name="reviews" value="Αξιολογήσεις Μαθητών">
+    </form>
+</body>
+</html>

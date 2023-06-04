@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Αξιολογήσεις Χρηστών</title>
+    <style>
+        .return-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin-top: 10px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        img {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <form action="/simple_user" method="post">
+    <input type="submit" value="Επιστροφή στην προηγούμενη σελίδα">
+    </form>
+    <h1>Αξιολογήσεις Χρηστών</h1>
+    <ul>
+        {% for review in reviews %}
+        <li>
+            <img src="{{ review.image_url }}" width="100" height="150">
+            <p>Τίτλος: {{ review.title }}</p>
+            <p>ISBN: {{ review.isbn }}</p>
+            <p>Username: {{ review.username }}</p>
+            <p>Likert: {{ review.likert }}</p>
+            <p>Κείμενο Αξιολόγησης: {{ review.review_text }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+

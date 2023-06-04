@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Δανεισμοί ανά Σχολείο</title>
+</head>
+<style>
+        .return-btn {
+                    position: fixed;
+                    top: 20px;
+                    left: 20px;
+                    background-color: #007bff;
+                    color: #fff;
+                    padding: 8px 16px;
+                    border: none;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    text-decoration: none;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            margin: 20px auto;
+            width: 300px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        select {
+            width: 200px;
+            padding: 5px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        h2 {
+            margin-top: 30px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+<body>
+    <form action="/sysadmin" method="post">
+    <input type="submit" value="Επιστροφή στην προηγούμενη σελίδα">
+    </form>
+    <h1>Δανεισμοί ανά Σχολείο</h1>
+
+        <form method="post" action="/sysadmin/borrows_per_school">
+            <label for="month_bor">Μήνας:</label>
+            <select id="month_bor" name="month_bor">
+                <option value="0">All</option>
+                <option value="1">Ιανουάριος</option>
+                <option value="2">Φεβρουάριος</option>
+                <option value="3">Μάρτιος</option>
+                <option value="4">Απρίλιος</option>
+                <option value="5">Μάιος</option>
+                <option value="6">Ιούνιος</option>
+                <option value="7">Ιούλιος</option>
+                <option value="8">Αύγουστος</option>
+                <option value="9">Σεπτέμβριος</option>
+                <option value="10">Οκτώβριος</option>
+                <option value="11">Νοέμβριος</option>
+                <option value="12">Δεκέμβριος</option>
+            </select>
+            <label for="year_bor">Έτος:</label>
+            <select id="year_bor" name="year_bor">
+                <option value="0">All</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+            </select>
+        <input type="submit" value="Υποβολή Μήνα/Ετους">
+    </form>
+
+    <h2>Δανεισμοί:</h2>
+        <table>
+            <tr>
+                <th>Σχολείο</th>
+                <th>Αριθμός Δανεισμών</th>
+            </tr>
+            {% for borrow in borrows %}
+                <tr>
+                    <td>{{borrow.school_name}}</td>
+                    <td>{{borrow.borrow_count}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+</body>

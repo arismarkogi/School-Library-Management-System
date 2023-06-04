@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Δίκτυο Σχολικών Βιβλιοθηκών</title>
+            
+            <style>
+                body{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    flex-direction: column;
+                }
+
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    width: 300px;
+                    margin-top: 20px;
+                }
+
+                label{
+                    margin-bottom: 10px;
+                }
+
+                input[type="text"],
+                input[type="password"]{
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+
+                input[type="submit"]{
+                    padding: 10px 20px;
+                    background-color: #1B7A3B;
+                    color: #fff;
+                    border: none;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
+
+                #message {
+                font-weight: bold;
+                font-size: 18px;
+                }
+
+                .forgot-password{
+                    margin-top: 10px;
+                    text-align: center;
+                }
+
+                .forgot-password-form{
+                    display: none;
+                    margin-top: 20px;
+                }
+
+                .forgot-password-form.visible{
+                    display: block;
+                }
+
+                .forgot-password-form input[type="text"]{
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    width: 97%;
+                    margin-bottom: 10px;
+                }
+            </style>
+        <script>
+            function showForgotPasswordForm(){
+                var form = document.querySelector('.forgot-password-form');
+                form.classList.toggle('visible');
+            }
+        </script>
+    </head>
+        <body>
+            <h1>Είσοδος στο Σύστημα</h1>
+            
+            <form action="/login" method="POST">
+                <label for="username">Όνομα Χρήστη</label>
+                <input type="text" id="username" name="username">
+                <label for="password">Κωδικός</label>
+                <input type="password" id="password" name="password">
+                <input type="submit" value="Είσοδος">
+            </form>
+            <div class="forgot-password">
+                <a href="#" onclick="showForgotPasswordForm(); return false;">Ξέχασες τον κωδικό σου;</a>
+                <form class="forgot-password-form" action="/login" method="POST">
+                    <label for="email">Συμπλήρωσε το email σου για να ανκτήσεις τον κωδικό σου!</label>
+                    <input type="text" id="email" name="email">
+                    <input type="submit" value="Υποβολή">
+                </form>
+            </div>
+            {% if msg %}
+            <p id="message">{{ msg }}</p>
+            {% endif %}
+        </body>
+</html>

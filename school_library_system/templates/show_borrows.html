@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Δανειζόμενοι που έχουν στην κατοχή τους τουλάχιστον ένα βιβλίο και έχουν καθυστερήσει την επιστροφή του</title>
+<style>
+    .return-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+    }
+    body {
+        font-family: Arial, sans-serif;
+    }
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+    form {
+        margin: 20px auto;
+        width: 500px;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    select {
+        width: 200px;
+        padding: 5px;
+        border-radius: 4px;
+    }
+    input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: block;
+        margin-top: 10px;
+    }
+    h2 {
+        margin-top: 30px;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    
+    .form-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+    }
+    
+    .form-row label {
+        width: 120px;
+        margin-right: 10px;
+    }
+    
+    .form-row select {
+        width: 200px;
+    }
+</style>
+
+
+
+</head>
+<body>
+    <form action="/school_admin" method="post">
+    <input type="submit" value="Επιστροφή στην προηγούμενη σελίδα">
+    </form>
+    <form method="POST" action="/school_admin/show_borrows">
+    
+    <label for="name">Επίλεξε Όνομα:</label>
+    <select id="name" name="name">
+        <option value="all">Όλα</option>
+        {% for name in names%}
+        <option value="{{ name.name }}">{{ name.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="surname">Επίλεξε Επώνυμο:</label>
+    <select id="surname" name="surname">
+    <option value="all">Όλα</option>
+    {% for surname in surnames%}
+        <option value="{{ surname.surname }}">{{ surname.surname }}</option>
+    {% endfor %}
+    </select>
+
+    
+    <label for="days_late">Αύξουσα ή φθίνουσα σειρά ημερών καθυστέρησης</label>
+    <select id="days_late" name="days_late">
+    <option value="nothing">Χωρίς Διάταξη</option>
+    <option value="asc">Αύξουσα</option>  
+    <option value="desc">Φθίνουσα</option>
+    </select>
+    
+    <input type="submit" value="Επιλογή">
+</form> 
+    <table>
+        <h1>Δανειζόμενοι που έχουν στην κατοχή τους τουλάχιστον ένα βιβλίο και έχουν καθυστερήσει την επιστροφή του</h1>
+        <tr>
+            <th>Επώνυμο</th>
+            <th>Όνομα</th>
+            <th>username</th>
+            <th>Ημερομηνία Δανεισμού</th>
+            <th>Ημέρες καθυστέρησης</th>
+        </tr>
+        {% for borrow in borrows %}
+            <tr>
+                <td>{{ borrow.name }}</td>
+                <td>{{ borrow.surname }}</td>
+                <td>{{ borrow.username }}</td>
+                <td>{{ borrow.borrow_date }}</td>
+                <td>{{ borrow.days_late }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+
