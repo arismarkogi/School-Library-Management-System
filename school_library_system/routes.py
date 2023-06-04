@@ -2282,7 +2282,7 @@ def change_data_su():
             flag = True
             query = f"""
                     UPDATE simple_user
-                    SET name = '{birthdate}'
+                    SET birthdate = '{birthdate}'
                     WHERE user_id =  {user_id}
                     """
 
