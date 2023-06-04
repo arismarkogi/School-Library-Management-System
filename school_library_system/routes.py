@@ -1295,12 +1295,17 @@ def add_library_book():
     if 'isbn' in request.form:
 
         isbn = request.form.get('isbn')
-
+        
+        cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(f"SELECT school_id FROM school_admin WHERE user_id = { user_id }")
+        school_id = cursor.fetchone()['school_id']
+        cursor.close()
+        
         if isbn == 'none':
 
             return redirect('/school_admin/add_library_book/book_not_exists')
         
-        query = f"SELECT * FROM library_book WHERE isbn = {isbn}"
+        query = f"SELECT * FROM library_book WHERE isbn = {isbn} AND school_id = {school_id}"
         cursor = db.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(query)
         my_isbn = cursor.fetchall()
