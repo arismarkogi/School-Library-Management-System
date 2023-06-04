@@ -94,7 +94,7 @@ def register_simple_user():
             db.connection.commit()
             cursor.close()
             
-            msg = "Η εγγραφή ολοκλρώθηκε επιτυχώς!"
+            msg = "Η Αίτηση Εγγφαφής ήταν Επιτυχής!"
 
     return render_template("register_simple_user.html", school_names = school_names, msg = msg)
 
@@ -162,7 +162,7 @@ def register_school_admin():
             db.connection.commit()
             cursor.close()
             
-            msg = "Η εγγραφή ολοκλρώθηκε επιτυχώς!"
+            msg = "Η Αίτηση Εγγφαφής ήταν Επιτυχής!"
 
     return render_template("register_school_admin.html", school_names = school_names, msg = msg)
 
